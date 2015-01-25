@@ -3,6 +3,8 @@ package edu.depaul.scavi.activities;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 
@@ -16,6 +18,7 @@ import edu.depaul.scavi.views.Keyboard;
 public class ARActivity extends Activity {
 
     Keyboard keyboard;
+    TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,16 +31,17 @@ public class ARActivity extends Activity {
             e.printStackTrace();
         }
 
+        textView = (TextView)findViewById(R.id.textview);
         keyboard = (Keyboard)findViewById(R.id.keyboard);
         keyboard.setListener(new Keyboard.KeyboardListener() {
             @Override
             public void wordTyped(String word) {
-                Log.v("ASDFASDF", word);
+                textView.setText(word);
             }
 
             @Override
             public void letterTyped(String letter) {
-                Log.v("ASDFASDF", letter);
+                textView.setText(textView.getText() + letter);
             }
         });
     }
