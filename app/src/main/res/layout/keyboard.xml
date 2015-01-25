@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:columnCount="10"
+    android:rowCount="3"
+    android:gravity="center">
+
+    <edu.depaul.scavi.views.KeyboardKey
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="Q"
+        android:layout_margin="5dp"
+        />
+
+    <edu.depaul.scavi.views.KeyboardKey
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="W"
+        android:layout_margin="5dp"
+        />
+
+    <edu.depaul.scavi.views.KeyboardKey
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="E"
+        android:layout_margin="5dp"
+        />
+
+    <edu.depaul.scavi.views.KeyboardKey
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="R"
+        android:layout_margin="5dp"
+        />
+
+    <edu.depaul.scavi.views.KeyboardKey
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="T"
+        android:layout_margin="5dp"
+        />
+
+    <edu.depaul.scavi.views.KeyboardKey
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="Y"
+        android:layout_margin="5dp"
+        />
+
+    <edu.depaul.scavi.views.KeyboardKey
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="U"
+        android:layout_margin="5dp"
+        />
+
+    <edu.depaul.scavi.views.KeyboardKey
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="I"
+        android:layout_margin="5dp"
+        />
+
+    <edu.depaul.scavi.views.KeyboardKey
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="O"
+        android:layout_margin="5dp"
+        />
+
+    <edu.depaul.scavi.views.KeyboardKey
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="P"
+        android:layout_margin="5dp"
+        />
+
+    <edu.depaul.scavi.views.KeyboardKey
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="A"
+        android:layout_margin="5dp"
+        />
+
+    <edu.depaul.scavi.views.KeyboardKey
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="S"
+        android:layout_margin="5dp"
+        />
+
+    <edu.depaul.scavi.views.KeyboardKey
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="D"
+        android:layout_margin="5dp"
+        />
+
+    <edu.depaul.scavi.views.KeyboardKey
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="F"
+        android:layout_margin="5dp"
+        />
+
+    <edu.depaul.scavi.views.KeyboardKey
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="G"
+        android:layout_margin="5dp"
+        />
+
+    <edu.depaul.scavi.views.KeyboardKey
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="H"
+        android:layout_margin="5dp"
+        />
+
+    <edu.depaul.scavi.views.KeyboardKey
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="J"
+        android:layout_margin="5dp"
+        />
+
+    <edu.depaul.scavi.views.KeyboardKey
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="K"
+        android:layout_margin="5dp"
+        />
+
+    <edu.depaul.scavi.views.KeyboardKey
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="L"
+        android:layout_margin="5dp"
+        />
+
+    <edu.depaul.scavi.views.KeyboardKey
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text=";"
+        android:layout_margin="5dp"
+        />
+
+    <edu.depaul.scavi.views.KeyboardKey
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="Z"
+        android:layout_margin="5dp"
+        />
+
+    <edu.depaul.scavi.views.KeyboardKey
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="X"
+        android:layout_margin="5dp"
+        />
+
+    <edu.depaul.scavi.views.KeyboardKey
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="C"
+        android:layout_margin="5dp"
+        />
+
+    <edu.depaul.scavi.views.KeyboardKey
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="V"
+        android:layout_margin="5dp"
+        />
+
+    <edu.depaul.scavi.views.KeyboardKey
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="B"
+        android:layout_margin="5dp"
+        />
+
+    <edu.depaul.scavi.views.KeyboardKey
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="N"
+        android:layout_margin="5dp"
+        />
+
+    <edu.depaul.scavi.views.KeyboardKey
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="M"
+        android:layout_margin="5dp"
+        />
+
+    <edu.depaul.scavi.views.KeyboardKey
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="x"
+        android:layout_margin="5dp"
+        />
+
+    <edu.depaul.scavi.views.KeyboardKey
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="x"
+        android:layout_margin="5dp"
+        />
+
+    <edu.depaul.scavi.views.KeyboardKey
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:text="/"
+        android:layout_margin="5dp"
+        />
+</GridLayout>
+
