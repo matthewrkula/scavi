@@ -51,10 +51,6 @@ public class Keyboard extends LinearLayout {
         paint.setColor(Color.RED);
         paint.setStrokeWidth(10);
         paint.setStyle(Paint.Style.STROKE);
-        paint.setDither(true);
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setStrokeJoin(Paint.Join.ROUND);
-        paint.setStrokeCap(Paint.Cap.ROUND);
     }
 
     public void setListener(KeyboardListener listener) {
