@@ -63,8 +63,7 @@ public class Keyboard extends LinearLayout {
     public boolean onTouchEvent(MotionEvent ev) {
         path.lineTo(ev.getX(), ev.getY());
         GridLayout grid = (GridLayout)getChildAt(0);
-        for(int _numChildren = grid.getChildCount() - 1; _numChildren >= 0; --_numChildren)
-        {
+        for(int _numChildren = grid.getChildCount() - 1; _numChildren >= 0; --_numChildren) {
             KeyboardKey child = (KeyboardKey)grid.getChildAt(_numChildren);
             Rect bounds = new Rect();
             child.getHitRect(bounds);

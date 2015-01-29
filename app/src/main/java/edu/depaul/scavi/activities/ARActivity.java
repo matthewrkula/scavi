@@ -1,7 +1,16 @@
 package edu.depaul.scavi.activities;
 
 import android.app.Activity;
+import android.graphics.SurfaceTexture;
+import android.hardware.Camera;
+import android.hardware.camera2.CameraDevice;
+import android.hardware.camera2.CameraManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
+import android.view.TextureView;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -13,10 +22,14 @@ import edu.depaul.scavi.views.Keyboard;
 /**
  * Created by matt on 1/22/15.
  */
-public class ARActivity extends Activity {
+public class ARActivity extends Activity implements SurfaceHolder.Callback {
 
     Keyboard keyboard;
     TextView textView;
+    SurfaceView textureView;
+
+    Camera camera;
+    SurfaceHolder holder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,5 +55,46 @@ public class ARActivity extends Activity {
                 textView.setText(textView.getText() + letter);
             }
         });
+
+        camera = Camera.open();
+        textureView = (SurfaceView)findViewById(R.id.camera_background);
+        holder = textureView.getHolder();
+        holder.addCallback(this);
+    }
+
+    @Override
+    public void surfaceCreated(SurfaceHolder holder) {
+        try {
+            camera.setPreviewDisplay(holder);
+            camera.startPreview();
+        } catch (IOException e) {
+            Log.d(ARActivity.class.toString(), "Error setting camera preview: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+        if (holder.getSurface() == null){
+            return;
+        }
+
+        try {
+            camera.stopPreview();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try {
+            camera.setPreviewDisplay(holder);
+            camera.startPreview();
+
+        } catch (Exception e){
+            Log.d(ARActivity.class.toString(), "Error starting camera preview: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void surfaceDestroyed(SurfaceHolder holder) {
+        camera.stopPreview();
     }
 }
