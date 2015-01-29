@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Welcome to Scavi-Hunt!"
+            android:id="@+id/txt_Title"
+            android:layout_marginTop="43dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Register"
+            android:id="@+id/btn_Register"
+            android:layout_alignTop="@+id/btn_Login"
+            android:layout_alignRight="@+id/field_Password"
+            android:layout_alignEnd="@+id/field_Password" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/field_UserID"
+            android:layout_marginTop="38dp"
+            android:layout_below="@+id/txt_Title"
+            android:layout_alignLeft="@+id/txt_Title"
+            android:layout_alignStart="@+id/txt_Title"
+            android:layout_alignRight="@+id/txt_Title"
+            android:layout_alignEnd="@+id/txt_Title"
+            android:hint="User Name"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/field_Password"
+            android:layout_below="@+id/field_UserID"
+            android:layout_alignLeft="@+id/field_UserID"
+            android:layout_alignStart="@+id/field_UserID"
+            android:layout_alignRight="@+id/field_UserID"
+            android:layout_alignEnd="@+id/field_UserID"
+            android:hint="Password"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Login"
+            android:id="@+id/btn_Login"
+            android:layout_below="@+id/field_Password"
+            android:layout_alignLeft="@+id/field_Password"
+            android:layout_alignStart="@+id/field_Password"
+            android:layout_marginTop="40dp" />
+
+    </RelativeLayout>
+</LinearLayout>
