@@ -21,8 +21,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Register"
-            android:id="@+id/btn_Register"
-            android:layout_alignTop="@+id/btn_Login"
+            android:id="@+id/btn_register"
+            android:layout_alignTop="@+id/btn_login"
             android:layout_alignRight="@+id/field_Password"
             android:layout_alignEnd="@+id/field_Password" />
 
@@ -57,8 +57,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Login"
-            android:id="@+id/btn_Login"
+            android:id="@+id/btn_login"
             android:layout_below="@+id/field_Password"
+            android:layout_alignLeft="@+id/field_Password"
+            android:layout_alignStart="@+id/field_Password"
+            android:layout_marginTop="40dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ozzie's Screen"
+            android:id="@+id/btn_ozzie"
+            android:layout_below="@+id/btn_register"
             android:layout_alignLeft="@+id/field_Password"
             android:layout_alignStart="@+id/field_Password"
             android:layout_marginTop="40dp" />

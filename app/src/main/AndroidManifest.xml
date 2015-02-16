@@ -32,17 +32,25 @@
             android:name=".activities.MapActivity"
             android:label="@string/title_activity_map" >
         </activity>
-
         <activity
-            android:name=".activities.ARActivity"
-            android:screenOrientation="landscape"
-            >
+            android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
 
-            </activity>
+        <activity android:name=".activities.RegisterActivity"/>
+        <activity android:name=".activities.OzzieActivity"/>
+
+        <activity
+            android:name=".activities.ARActivity"
+            android:screenOrientation="landscape">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
 
     </application>
 
