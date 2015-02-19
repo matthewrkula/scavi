@@ -28,7 +28,7 @@ public class MainActivity extends Activity {
         findViewById(R.id.btn_login).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, ARActivity.class));
+                startActivity(new Intent(MainActivity.this, HuntListActivity.class));
             }
         });
 

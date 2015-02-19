@@ -30,6 +30,7 @@ public class ARActivity extends Activity implements SurfaceHolder.Callback {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ar);
+        getActionBar().hide();
 
         try {
             Dictionary.getInstance().isSetup(this);
