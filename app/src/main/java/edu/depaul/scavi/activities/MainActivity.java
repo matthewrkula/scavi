@@ -39,6 +39,7 @@ public class MainActivity extends Activity {
                 startActivity(new Intent(MainActivity.this, OzzieActivity.class));
             }
         });
+        findViewById(R.id.btn_ozzie).setVisibility(View.INVISIBLE);
     }
 
 

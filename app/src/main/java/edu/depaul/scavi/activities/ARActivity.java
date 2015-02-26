@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -19,8 +21,17 @@ import edu.depaul.scavi.views.Keyboard;
  */
 public class ARActivity extends Activity implements SurfaceHolder.Callback {
 
+    enum CurrentState {
+        ROAMING,
+        VIEWING_QUESTION,
+        ANSWERING
+    }
+
+    CurrentState currentState = CurrentState.ROAMING;
+
     Keyboard keyboard;
-    TextView textView;
+    TextView textView, questionView;
+    Button answerBtn;
     SurfaceView textureView;
 
     Camera camera;
@@ -39,7 +50,11 @@ public class ARActivity extends Activity implements SurfaceHolder.Callback {
         }
 
         textView = (TextView)findViewById(R.id.textview);
+        questionView = (TextView)findViewById(R.id.tv_question);
+        questionView.setVisibility(View.INVISIBLE);
         keyboard = (Keyboard)findViewById(R.id.keyboard);
+
+        keyboard.setTranslationY(-360);
         keyboard.setListener(new Keyboard.KeyboardListener() {
             @Override
             public void wordTyped(String word) {
@@ -49,6 +64,35 @@ public class ARActivity extends Activity implements SurfaceHolder.Callback {
             @Override
             public void letterTyped(String letter) {
                 textView.setText(textView.getText() + letter);
+            }
+        });
+
+        answerBtn = (Button)findViewById(R.id.btn_answer);
+        answerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (currentState) {
+                    case ROAMING:
+                        answerBtn.setText("Answer Question");
+                        questionView.setVisibility(View.VISIBLE);
+                        currentState = CurrentState.VIEWING_QUESTION;
+                        break;
+                    case VIEWING_QUESTION:
+                        answerBtn.setVisibility(View.GONE);
+                        questionView.setVisibility(View.GONE);
+                        keyboard.animate().translationY(0).start();
+                        textView.setVisibility(View.VISIBLE);
+                        currentState = CurrentState.ANSWERING;
+                        break;
+                    case ANSWERING:
+                        answerBtn.setVisibility(View.VISIBLE);
+                        questionView.setText("");
+                        questionView.setVisibility(View.VISIBLE);
+                        keyboard.animate().translationY(-360).start();
+                        textView.setVisibility(View.GONE);
+                        currentState = CurrentState.ROAMING;
+                        break;
+                }
             }
         });
 
@@ -92,5 +136,6 @@ public class ARActivity extends Activity implements SurfaceHolder.Callback {
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         camera.stopPreview();
+        camera.release();
     }
 }
