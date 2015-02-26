@@ -40,7 +40,7 @@ public class MapActivity extends FragmentActivity {
 
     ScavengerHunt scavengerHunt;
     Clue[] clues;
-    Clue currentClue;
+    int currentClueIndex = 1;
     ProgressDialog dialog;
 
     public static Intent getIntent(Context c, ScavengerHunt hunt) {
@@ -65,7 +65,7 @@ public class MapActivity extends FragmentActivity {
                         try {
                             String json = jsonObject.getJSONArray("clueRows").toString();
                             clues = gson.fromJson(json, Clue[].class);
-                            updateMap();
+                            updateMap(0);
                             dialog.dismiss();
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -88,10 +88,11 @@ public class MapActivity extends FragmentActivity {
         setUpMapIfNeeded();
     }
 
-    private void updateMap() {
+    private void updateMap(int newClueIndex) {
         mMap.clear();
-        if (clues != null && clues.length > 0) {
-            currentClue = clues[0];
+        currentClueIndex = newClueIndex;
+        if (clues != null && clues.length > 0 && clues.length > currentClueIndex) {
+            Clue currentClue = clues[currentClueIndex];
             LatLng cluePosition = new LatLng(currentClue.getLatitude(), currentClue.getLongitude());
             mMap.addMarker(new MarkerOptions()
                     .position(cluePosition)
@@ -107,11 +108,20 @@ public class MapActivity extends FragmentActivity {
             mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                 @Override
                 public void onInfoWindowClick(Marker marker) {
+                    Clue currentClue = clues[currentClueIndex];
                     if (currentClue != null) {
-                        startActivity(ARActivity.getIntent(MapActivity.this, currentClue));
+                        startActivityForResult(ARActivity.getIntent(MapActivity.this, currentClue), 0);
                     }
                 }
             });
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0 && resultCode == RESULT_OK) {
+            updateMap(currentClueIndex + 1);
         }
     }
 }

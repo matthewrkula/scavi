@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.hardware.Camera;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -35,7 +36,7 @@ public class ARActivity extends Activity implements SurfaceHolder.Callback {
 
     Keyboard keyboard;
     TextView textView, questionView;
-    Button answerBtn;
+    Button answerBtn, submitBtn;
     SurfaceView textureView;
 
     Clue clue;
@@ -67,6 +68,7 @@ public class ARActivity extends Activity implements SurfaceHolder.Callback {
         questionView = (TextView)findViewById(R.id.tv_question);
         questionView.setVisibility(View.INVISIBLE);
         keyboard = (Keyboard)findViewById(R.id.keyboard);
+        submitBtn = (Button)findViewById(R.id.btn_submit);
 
         questionView.setText(clue.getQuestion());
 
@@ -102,6 +104,7 @@ public class ARActivity extends Activity implements SurfaceHolder.Callback {
                         questionView.setVisibility(View.GONE);
                         keyboard.animate().translationY(0).start();
                         textView.setVisibility(View.VISIBLE);
+                        submitBtn.setVisibility(View.VISIBLE);
                         currentState = CurrentState.ANSWERING;
                         break;
                     case ANSWERING:
@@ -115,11 +118,33 @@ public class ARActivity extends Activity implements SurfaceHolder.Callback {
                 }
             }
         });
+        submitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String guess = textView.getText().toString().trim();
+                if (guess.equalsIgnoreCase(clue.getAnswer())) {
+                    textView.setText("CORRECT");
+                    exit();
+                } else {
+                    textView.setText("WRONG");
+                }
+            }
+        });
 
         camera = Camera.open();
         textureView = (SurfaceView)findViewById(R.id.camera_background);
         holder = textureView.getHolder();
         holder.addCallback(this);
+    }
+
+    private void exit() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                setResult(RESULT_OK);
+                finish();
+            }
+        }, 1000);
     }
 
     @Override
