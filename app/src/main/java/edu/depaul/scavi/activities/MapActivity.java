@@ -108,7 +108,7 @@ public class MapActivity extends FragmentActivity {
                 @Override
                 public void onInfoWindowClick(Marker marker) {
                     if (currentClue != null) {
-                        Log.v("ASDFASDF", currentClue.getQuestion());
+                        startActivity(ARActivity.getIntent(MapActivity.this, currentClue));
                     }
                 }
             });

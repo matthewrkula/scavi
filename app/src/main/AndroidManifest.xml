@@ -30,8 +30,10 @@
 
         <activity
             android:name=".activities.MapActivity"
-            android:label="@string/title_activity_map" >
+            android:label="@string/title_activity_map"
+            android:screenOrientation="portrait">
         </activity>
+
         <activity
             android:name=".activities.MainActivity">
             <intent-filter>
@@ -41,7 +43,8 @@
         </activity>
 
         <activity android:name=".activities.RegisterActivity"/>
-        <activity android:name=".activities.HuntListActivity"/>
+        <activity android:name=".activities.HuntListActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".activities.OzzieActivity">
             <meta-data android:name="com.google.android.gms.version"
                 android:value="@integer/google_play_services_version" />

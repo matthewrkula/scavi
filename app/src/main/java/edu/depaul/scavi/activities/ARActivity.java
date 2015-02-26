@@ -1,6 +1,8 @@
 package edu.depaul.scavi.activities;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 import java.io.IOException;
 
 import edu.depaul.scavi.R;
+import edu.depaul.scavi.data.Clue;
 import edu.depaul.scavi.keyboard.Dictionary;
 import edu.depaul.scavi.views.Keyboard;
 
@@ -23,19 +26,28 @@ public class ARActivity extends Activity implements SurfaceHolder.Callback {
 
     enum CurrentState {
         ROAMING,
+        IN_RANGE,
         VIEWING_QUESTION,
         ANSWERING
     }
 
-    CurrentState currentState = CurrentState.ROAMING;
+    CurrentState currentState = CurrentState.IN_RANGE;
 
     Keyboard keyboard;
     TextView textView, questionView;
     Button answerBtn;
     SurfaceView textureView;
 
+    Clue clue;
+
     Camera camera;
     SurfaceHolder holder;
+
+    public static Intent getIntent(Context c, Clue clue) {
+        Intent i = new Intent(c, ARActivity.class);
+        i.putExtra("clue", clue);
+        return i;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +61,14 @@ public class ARActivity extends Activity implements SurfaceHolder.Callback {
             e.printStackTrace();
         }
 
+        clue = (Clue)getIntent().getSerializableExtra("clue");
+
         textView = (TextView)findViewById(R.id.textview);
         questionView = (TextView)findViewById(R.id.tv_question);
         questionView.setVisibility(View.INVISIBLE);
         keyboard = (Keyboard)findViewById(R.id.keyboard);
+
+        questionView.setText(clue.getQuestion());
 
         keyboard.setTranslationY(-360);
         keyboard.setListener(new Keyboard.KeyboardListener() {
@@ -73,6 +89,10 @@ public class ARActivity extends Activity implements SurfaceHolder.Callback {
             public void onClick(View v) {
                 switch (currentState) {
                     case ROAMING:
+                        answerBtn.setText("100 feet away");
+                        currentState = CurrentState.IN_RANGE;
+                        break;
+                    case IN_RANGE:
                         answerBtn.setText("Answer Question");
                         questionView.setVisibility(View.VISIBLE);
                         currentState = CurrentState.VIEWING_QUESTION;
