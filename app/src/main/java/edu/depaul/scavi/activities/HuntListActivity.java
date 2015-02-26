@@ -71,7 +71,7 @@ public class HuntListActivity extends ListActivity {
         getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(HuntListActivity.this, ARActivity.class));
+                startActivity(MapActivity.getIntent(HuntListActivity.this, data[position]));
             }
         });
     }

@@ -1,24 +1,32 @@
 package edu.depaul.scavi.activities;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Map;
 
 import edu.depaul.scavi.R;
+import edu.depaul.scavi.data.Clue;
 import edu.depaul.scavi.data.ScavengerHunt;
 import edu.depaul.scavi.networking.NetworkManager;
 
@@ -28,10 +36,14 @@ public class MapActivity extends FragmentActivity {
 
     String url = "http://peter1123.pythonanywhere.com/ScaviHunt/default/hunt_admin_CLICK.json/%d";
     JsonObjectRequest request;
+    Gson gson = new Gson();
 
     ScavengerHunt scavengerHunt;
+    Clue[] clues;
+    Clue currentClue;
+    ProgressDialog dialog;
 
-    public Intent getIntent(Context c, ScavengerHunt hunt) {
+    public static Intent getIntent(Context c, ScavengerHunt hunt) {
         Intent i = new Intent(c, MapActivity.class);
         i.putExtra("hunt", hunt);
         return i;
@@ -43,18 +55,30 @@ public class MapActivity extends FragmentActivity {
         setContentView(R.layout.activity_map);
         setUpMapIfNeeded();
 
-        request = new JsonObjectRequest(Request.Method.GET, String.format(url, scavengerHunt.getId()),
-                null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject jsonObject) {
+        scavengerHunt = (ScavengerHunt)getIntent().getSerializableExtra("hunt");
 
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-
-            }
-        });
+        request = new JsonObjectRequest(Request.Method.GET,
+                String.format(url, scavengerHunt.getId()), null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject jsonObject) {
+                        try {
+                            String json = jsonObject.getJSONArray("clueRows").toString();
+                            clues = gson.fromJson(json, Clue[].class);
+                            updateMap();
+                            dialog.dismiss();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        Log.v(MapActivity.class.getName(), volleyError.toString());
+                    }
+                });
+        dialog = ProgressDialog.show(this, "", "Loading clues...", true);
         NetworkManager.getInstance(this).addRequest(request);
     }
 
@@ -64,20 +88,30 @@ public class MapActivity extends FragmentActivity {
         setUpMapIfNeeded();
     }
 
-    private void setUpMapIfNeeded() {
-        // Do a null check to confirm that we have not already instantiated the map.
-        if (mMap == null) {
-            // Try to obtain the map from the SupportMapFragment.
-            mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
-                    .getMap();
-            // Check if we were successful in obtaining the map.
-            if (mMap != null) {
-                setUpMap();
-            }
+    private void updateMap() {
+        mMap.clear();
+        if (clues != null && clues.length > 0) {
+            currentClue = clues[0];
+            LatLng cluePosition = new LatLng(currentClue.getLatitude(), currentClue.getLongitude());
+            mMap.addMarker(new MarkerOptions()
+                    .position(cluePosition)
+                    .title("Enter Augmented Reality..."));
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(cluePosition, 15));
         }
     }
 
-    private void setUpMap() {
-        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
+    private void setUpMapIfNeeded() {
+        if (mMap == null) {
+            mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
+                    .getMap();
+            mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                @Override
+                public void onInfoWindowClick(Marker marker) {
+                    if (currentClue != null) {
+                        Log.v("ASDFASDF", currentClue.getQuestion());
+                    }
+                }
+            });
+        }
     }
 }
