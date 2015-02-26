@@ -29,5 +29,6 @@ dependencies {
     compile('com.google.maps.android:android-maps-utils:0.3') {
         exclude group: 'com.google.android.gms'
     }
-
+    compile 'com.mcxiaoke.volley:library-aar:1.0.0'
+    compile 'com.google.code.gson:gson:2.3'
 }
