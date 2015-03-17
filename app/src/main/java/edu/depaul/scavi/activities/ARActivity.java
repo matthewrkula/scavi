@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Camera;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -12,6 +15,8 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.google.android.gms.maps.model.LatLng;
 
 import java.io.IOException;
 
@@ -32,12 +37,17 @@ public class ARActivity extends Activity implements SurfaceHolder.Callback {
         ANSWERING
     }
 
+    int QUESTION_RADIUS = 100;
+
     CurrentState currentState = CurrentState.IN_RANGE;
 
     Keyboard keyboard;
     TextView textView, questionView;
     Button answerBtn, submitBtn;
     SurfaceView textureView;
+
+    LocationManager locationManager;
+    Location currentLocation;
 
     Clue clue;
 
@@ -55,6 +65,8 @@ public class ARActivity extends Activity implements SurfaceHolder.Callback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ar);
         getActionBar().hide();
+
+        setupLocationUpdates();
 
         try {
             Dictionary.getInstance().isSetup(this);
@@ -145,6 +157,55 @@ public class ARActivity extends Activity implements SurfaceHolder.Callback {
                 finish();
             }
         }, 1000);
+    }
+
+    LocationListener locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                if (currentLocation == null || location.getAccuracy() > currentLocation.getAccuracy()) {
+                    currentLocation = location;
+                    int distance = getDistanceInFeet() - QUESTION_RADIUS;
+                    Log.v("LOG THIS", distance + " feet");
+                    if (distance > 0) {
+                        String buttontext = String.format("%d feet away", distance);
+                        answerBtn.setText(buttontext);
+//                    answerBtn.setEnabled(false);
+                    } else {
+                        answerBtn.setText("View Question");
+//                    answerBtn.setEnabled(true);
+                    }
+                }
+
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+
+            }
+        };
+
+    private void setupLocationUpdates() {
+        locationManager = (LocationManager)getSystemService(LOCATION_SERVICE);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 0, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, 5000, 0, locationListener);
+    }
+
+    private int getDistanceInFeet() {
+        return (int)(Math.sqrt(
+                Math.pow(currentLocation.getLatitude() - clue.getLatitude(), 2) +
+                        Math.pow(currentLocation.getLongitude() - clue.getLongitude(), 2)
+        ) * 362776);
     }
 
     @Override
