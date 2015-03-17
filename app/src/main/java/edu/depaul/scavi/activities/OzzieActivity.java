@@ -1,35 +1,26 @@
 package edu.depaul.scavi.activities;
 
 import android.app.Activity;
-import android.app.Dialog;
-import android.app.DialogFragment;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
-import android.location.GpsStatus;
 import android.location.Location;
-//import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.ErrorDialogFragment;
-import com.google.android.gms.common.GooglePlayServicesClient;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.LocationListener;
 
 import java.text.DateFormat;
 import java.util.Date;
 
 import edu.depaul.scavi.R;
+
+//import android.location.LocationListener;
 
 /**
  * Created by matt on 2/15/15.

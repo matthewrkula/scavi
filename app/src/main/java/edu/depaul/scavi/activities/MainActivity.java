@@ -6,19 +6,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import edu.depaul.scavi.R;
-import edu.depaul.scavi.data.ScavengerHunt;
-import edu.depaul.scavi.data.User;
 import edu.depaul.scavi.networking.NetworkManager;
 
 /**
@@ -64,23 +60,24 @@ public class MainActivity extends Activity {
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
-                try {
+//                try {
                     //TODO: Login here
-                    data = gson.fromJson(jsonObject.toString(), User.class);
+//                    data = gson.fromJson(jsonObject.toString(), User.class);
                     dialog.dismiss();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 Log.v(MainActivity.class.getName(), volleyError.toString());
+                dialog.dismiss();
             }
         });
 
-        NetworkManager.getInstance(this).addRequest(request);
         dialog = ProgressDialog.show(this, "", "Logging in...", true);
+        NetworkManager.getInstance(this).addRequest(request);
     }
 
 }

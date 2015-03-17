@@ -1,16 +1,10 @@
 package edu.depaul.scavi.activities;
 
-import android.app.DownloadManager;
 import android.app.ListActivity;
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
@@ -22,8 +16,6 @@ import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.List;
 
 import edu.depaul.scavi.data.ScavengerHunt;
 import edu.depaul.scavi.networking.NetworkManager;
