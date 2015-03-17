@@ -1,11 +1,14 @@
 package edu.depaul.scavi.activities;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -121,7 +124,31 @@ public class MapActivity extends FragmentActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 0 && resultCode == RESULT_OK) {
+            if (currentClueIndex != clues.length - 1) {
+                showPointsDialog(clues[currentClueIndex].getPoints());
+            } else {
+                new AlertDialog.Builder(this)
+                        .setTitle("You earned " + clues[currentClueIndex].getPoints() + " points! " +
+                                "You have finished the Scavenger Hunt!")
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        }).show();
+            }
             updateMap(currentClueIndex + 1);
         }
+    }
+
+    private void showPointsDialog(int points) {
+        new AlertDialog.Builder(this)
+                .setTitle("You earned " + points + " points!")
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).show();
     }
 }
