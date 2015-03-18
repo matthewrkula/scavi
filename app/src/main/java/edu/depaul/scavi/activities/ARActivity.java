@@ -88,12 +88,27 @@ public class ARActivity extends Activity implements SurfaceHolder.Callback {
         keyboard.setListener(new Keyboard.KeyboardListener() {
             @Override
             public void wordTyped(String word) {
-                textView.setText(word);
+                resetTextViewIfNeeded();
+                textView.setText(textView.getText() + " " + word);
             }
 
             @Override
             public void letterTyped(String letter) {
+                resetTextViewIfNeeded();
                 textView.setText(textView.getText() + letter);
+            }
+            @Override
+            public void backspacePressed() {
+                if (textView.getText().toString().equalsIgnoreCase("wrong")) {
+                    textView.setText("");
+                } else {
+                    textView.setText(textView.getText().subSequence(0, textView.getText().length() - 1));
+                }
+            }
+            private void resetTextViewIfNeeded() {
+                if (textView.getText().toString().equalsIgnoreCase("wrong")) {
+                    textView.setText("");
+                }
             }
         });
 

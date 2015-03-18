@@ -10,6 +10,8 @@ import android.widget.TextView;
  */
 public class KeyboardKey extends TextView {
 
+    boolean isSwipeable = true;
+
     public KeyboardKey(Context context) {
         super(context);
         init();
@@ -26,5 +28,13 @@ public class KeyboardKey extends TextView {
         setTextColor(getResources().getColor(android.R.color.white));
         setTextSize(40);
         setGravity(Gravity.CENTER_HORIZONTAL);
+    }
+
+    public boolean isSwipeable() {
+        return isSwipeable;
+    }
+
+    public void setSwipeable(boolean isSwipeable) {
+        this.isSwipeable = isSwipeable;
     }
 }

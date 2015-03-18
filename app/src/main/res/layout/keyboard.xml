@@ -140,9 +140,10 @@
         />
 
     <edu.depaul.scavi.views.KeyboardKey
+        android:id="@+id/backspace"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:text=";"
+        android:text="&lt;"
         android:layout_margin="5dp"
         />
 
@@ -196,23 +197,10 @@
         />
 
     <edu.depaul.scavi.views.KeyboardKey
+        android:id="@+id/space"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
-        android:text="x"
-        android:layout_margin="5dp"
-        />
-
-    <edu.depaul.scavi.views.KeyboardKey
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:text="x"
-        android:layout_margin="5dp"
-        />
-
-    <edu.depaul.scavi.views.KeyboardKey
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:text="/"
+        android:text="_"
         android:layout_margin="5dp"
         />
 </GridLayout>

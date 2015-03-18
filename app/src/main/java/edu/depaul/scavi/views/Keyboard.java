@@ -30,6 +30,9 @@ public class Keyboard extends LinearLayout {
 
     KeyboardListener listener;
 
+    KeyboardKey backspaceKey;
+    KeyboardKey spaceKey;
+
     public Keyboard(Context context) {
         super(context);
         init();
@@ -47,6 +50,28 @@ public class Keyboard extends LinearLayout {
         paint.setColor(Color.RED);
         paint.setStrokeWidth(10);
         paint.setStyle(Paint.Style.STROKE);
+
+        backspaceKey = (KeyboardKey)findViewById(R.id.backspace);
+        backspaceKey.setSwipeable(false);
+        backspaceKey.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.backspacePressed();
+                }
+            }
+        });
+
+        backspaceKey = (KeyboardKey)findViewById(R.id.space);
+        backspaceKey.setSwipeable(false);
+        backspaceKey.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.letterTyped(" ");
+                }
+            }
+        });
     }
 
     public void setListener(KeyboardListener listener) {
@@ -68,7 +93,7 @@ public class Keyboard extends LinearLayout {
             Rect bounds = new Rect();
             child.getHitRect(bounds);
             if (bounds.contains((int)ev.getX(), (int)ev.getY())) {
-                if (child instanceof KeyboardKey) {
+                if (child.isSwipeable()) {
                     if (algoList.size() == 0 || !algoList.get(algoList.size()-1).equals(child.getText().toString())) {
                         algoList.add(child.getText().toString());
                     }
@@ -108,5 +133,6 @@ public class Keyboard extends LinearLayout {
     public interface KeyboardListener {
         public void wordTyped(String word);
         public void letterTyped(String letter);
+        public void backspacePressed();
     }
 }
