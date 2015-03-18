@@ -27,17 +27,21 @@ import org.json.JSONObject;
 import edu.depaul.scavi.R;
 import edu.depaul.scavi.data.Clue;
 import edu.depaul.scavi.data.ScavengerHunt;
+import edu.depaul.scavi.data.Session;
+import edu.depaul.scavi.data.User;
 import edu.depaul.scavi.networking.NetworkManager;
 
 public class MapActivity extends FragmentActivity {
 
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
 
-    String url = "http://peter1123.pythonanywhere.com/ScaviHunt/default/hunt_admin_CLICK.json/%d";
+    String url = "http://peter1123.pythonanywhere.com/ScaviHunt/default/huntsession.json/?user_id=%d&hunt_id=%s";
+    String updateUrl = "http://peter1123.pythonanywhere.com/ScaviHunt/default/updatesession.json/?user_id=%d&hunt_id=%s&current_clue_number=%d";
     JsonObjectRequest request;
     Gson gson = new Gson();
 
     ScavengerHunt scavengerHunt;
+    Session session;
     Clue[] clues;
     int currentClueIndex = 1;
     ProgressDialog dialog;
@@ -57,14 +61,16 @@ public class MapActivity extends FragmentActivity {
         scavengerHunt = (ScavengerHunt)getIntent().getSerializableExtra("hunt");
 
         request = new JsonObjectRequest(Request.Method.GET,
-                String.format(url, scavengerHunt.getId()), null,
+                String.format(url, User.loggedUser.id, scavengerHunt.getId()), null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject jsonObject) {
                         try {
-                            String json = jsonObject.getJSONArray("clueRows").toString();
+                            String json = jsonObject.getJSONArray("rows").toString();
                             clues = gson.fromJson(json, Clue[].class);
-                            updateMap(0);
+                            json = jsonObject.getJSONArray("session").getJSONObject(0).toString();
+                            session = gson.fromJson(json, Session.class);
+                            updateMap(session.current_clue_number);
                             dialog.dismiss();
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -97,6 +103,15 @@ public class MapActivity extends FragmentActivity {
                     .position(cluePosition)
                     .title("Enter Augmented Reality..."));
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(cluePosition, 15));
+        } else {
+            new AlertDialog.Builder(this)
+                    .setTitle("You have finished the Scavenger Hunt!")
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    }).show();
         }
     }
 
@@ -133,8 +148,27 @@ public class MapActivity extends FragmentActivity {
                             }
                         }).show();
             }
+            updateServer(currentClueIndex + 1);
             updateMap(currentClueIndex + 1);
         }
+    }
+
+    private void updateServer(int clueNumber) {
+        request = new JsonObjectRequest(Request.Method.GET,
+                String.format(updateUrl, User.loggedUser.id, scavengerHunt.getId(), clueNumber), null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject jsonObject) {
+                        Log.v("LOG IT", "Updated");
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        Log.v(MapActivity.class.getName(), volleyError.toString());
+                    }
+                });
+        NetworkManager.getInstance(this).addRequest(request);
     }
 
     private void showPointsDialog(int points) {

@@ -169,10 +169,8 @@ public class ARActivity extends Activity implements SurfaceHolder.Callback {
                     if (distance > 0) {
                         String buttontext = String.format("%d feet away", distance);
                         answerBtn.setText(buttontext);
-//                    answerBtn.setEnabled(false);
                     } else {
                         answerBtn.setText("View Question");
-//                    answerBtn.setEnabled(true);
                     }
                 }
 
