@@ -39,7 +39,6 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         email = (EditText)findViewById(R.id.field_UserID);
-        email.setText("pbogun1123@gmail.com");
 
         findViewById(R.id.btn_login).setOnClickListener(new View.OnClickListener() {
             @Override

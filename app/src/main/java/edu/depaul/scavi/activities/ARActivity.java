@@ -102,7 +102,9 @@ public class ARActivity extends Activity implements SurfaceHolder.Callback {
                 if (textView.getText().toString().equalsIgnoreCase("wrong")) {
                     textView.setText("");
                 } else {
-                    textView.setText(textView.getText().subSequence(0, textView.getText().length() - 1));
+                    if (textView.getText().length() > 0) {
+                        textView.setText(textView.getText().subSequence(0, textView.getText().length() - 1));
+                    }
                 }
             }
             private void resetTextViewIfNeeded() {
@@ -177,7 +179,7 @@ public class ARActivity extends Activity implements SurfaceHolder.Callback {
     LocationListener locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                if (currentLocation == null || location.getAccuracy() > currentLocation.getAccuracy()) {
+                if (currentLocation == null || location.getAccuracy() >= currentLocation.getAccuracy()) {
                     currentLocation = location;
                     int distance = getDistanceInFeet() - QUESTION_RADIUS;
                     Log.v("LOG THIS", distance + " feet");
