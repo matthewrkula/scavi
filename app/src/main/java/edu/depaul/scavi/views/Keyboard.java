@@ -25,7 +25,7 @@ import edu.depaul.scavi.keyboard.TemplatePrune;
 public class Keyboard extends LinearLayout {
 
     ArrayList<String> algoList = new ArrayList<>();
-    Path path = new Path();
+//    Path path = new Path();
     Paint paint = new Paint();
 
     KeyboardListener listener;
@@ -81,12 +81,12 @@ public class Keyboard extends LinearLayout {
     @Override
     protected void dispatchDraw(Canvas canvas) {
         super.dispatchDraw(canvas);
-        canvas.drawPath(path, paint);
+//        canvas.drawPath(path, paint);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
-        path.lineTo(ev.getX(), ev.getY());
+//        path.lineTo(ev.getX(), ev.getY());
         GridLayout grid = (GridLayout)getChildAt(0);
         for(int _numChildren = grid.getChildCount() - 1; _numChildren >= 0; --_numChildren) {
             KeyboardKey child = (KeyboardKey)grid.getChildAt(_numChildren);
@@ -104,8 +104,8 @@ public class Keyboard extends LinearLayout {
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 algoList = new ArrayList<>();
-                path.reset();
-                path.moveTo(ev.getX(), ev.getY());
+//                path.reset();
+//                path.moveTo(ev.getX(), ev.getY());
                 break;
             case MotionEvent.ACTION_UP:
                 try {
